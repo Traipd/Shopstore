@@ -1,0 +1,66 @@
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace:当前映射文件是对哪个接口的实现
+	四类方法：insert  delete  update select
+	 id:方法名
+	 parameterType：设置需要传入的参数类型
+	 注意：不允许手动设置执行返回结果类型
+	 默认：返回类型为int
+	 #{param}
+	 注意：书写完sql语句后，不允许以;结尾
+	 -->
+<mapper namespace="com.xmx.oa.model.service.ProductService">
+<insert id="addProduct" parameterType="com.xmx.model.entity.Product">
+insert  into storehome values(#{pid},#{category},#{pname},#{pprize},#{introduction},#{rigdate})
+</insert>
+<delete id="deleteProduct" parameterType="java.lang.String">
+delete from storehome where pid=#{id}
+</delete>
+<update id="updateProduct" parameterType="com.xmx.model.entity.Product" >
+update storehome set pid=#{pid},category=#{category},pname=#{pname},pprize=#{pprize},introduction=#{introduction} where pid=#{pid}
+</update>
+<!-- resultMap:结果的返回类型 
+要求必须是你的字段名和属性名一致
+-->
+<!--  <select id="findAllPerson" resultType="com.xmx.model.entity.Person">
+select * from person
+</select>
+-->
+<!--  
+<select id="findAllPerson" resultType="com.xmx.model.entity.Person2">
+select id as pid,name as pname,sex as psex,age as page,tel as ptel,role as prole from person
+</select>
+-->
+<select id="loginManager" resultType="com.xmx.model.entity.Manager" parameterType="java.lang.String">
+	select * from manager where id=#{id}
+</select>
+ <select id="findAllProduct" resultType="com.xmx.model.entity.Product" resultMap="rm">
+select * from storehome
+</select>
+<select id="findById" resultType="com.xmx.model.entity.Product" parameterType="java.lang.String">
+select * from storehome where pid=#{pid}
+</select>
+<select id="findAllByPage" resultType="com.xmx.model.entity.Product">
+select * from storehome limit #{currentPage},#{psize}
+</select>
+<select id="findByName" resultType="com.xmx.model.entity.Product" parameterType="java.lang.String">
+select * from storehome where pname like concat('%',#{pname},'%')
+</select>
+<select id="findByAge" resultType="com.xmx.model.entity.Product">
+select * from person where age  between #{age1} and #{age2}
+</select>
+<select id="getRows" resultType="java.lang.Integer">
+select count(*) from storehome
+</select>
+<!-- 属性名与字段名不一致时，手动设置字段与属性的对应关系 -->
+ <resultMap type="com.xmx.model.entity.Product" id="rm">
+<result column="pid" property="pid"/>
+<result column="category" property="category"/>
+<result column="pname" property="pname"/>
+<result column="pprize" property="pprize"/>
+<result column="introduction" property="introduction"/>
+<result column="rigdate" property="rigdate"/>
+</resultMap>
+</mapper>

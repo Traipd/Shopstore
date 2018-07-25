@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE configuration PUBLIC
+ "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+ <!-- type:指连接数据库的方式JDBC,MANAGED; -->
+ <!-- dataSource type:设置数据源的类型,POOLED: 连接池 -->
+<environments default="cs">
+<environment id="cs">
+<transactionManager type="JDBC"></transactionManager>
+<dataSource type="POOLED">
+<property name="driver" value="com.mysql.jdbc.Driver"/>
+<property name="url" value="jdbc:mysql://localhost:3306/shopstore?characterEncoding=UTF-8"/>
+<property name="username" value="root"/>
+<property name="password" value="root"/>
+</dataSource>
+</environment>
+</environments>
+<!-- 注册映射信息 -->
+<mappers>
+<mapper resource="com/xmx/oa/model/service/ProductService-mapper.xml" />
+</mappers>
+ </configuration>
